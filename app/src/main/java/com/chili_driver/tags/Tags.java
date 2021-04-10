@@ -8,6 +8,7 @@ public class Tags {
     public static final String session_logout = "logout";
     public static final String not_tag = "truck_trip_not_tag";
     public static final int not_id = 3254;
-    //trucktripapp@gmail.com
-    //https://xd.adobe.com/view/c4f23758-92b9-4f33-890f-98aa2868bddd-91a1/screen/f13b4827-f43b-4b32-bdc9-5dddc056617a/
+
+    //https://documenter.getpostman.com/view/15112088/TzCHBVjL#913c3266-30a2-45a5-bf9e-a3d5101b3214
+
 }
