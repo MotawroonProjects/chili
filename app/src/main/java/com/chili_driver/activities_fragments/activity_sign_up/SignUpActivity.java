@@ -83,8 +83,8 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
         signUpModel = new SignUpModel();
         binding.setListener(this);
         if (userModel != null) {
-            signUpModel.setEmail(userModel.getData().getEmail());
-            signUpModel.setRestaurant_name(userModel.getData().getName());
+            signUpModel.setEmail(userModel.getEmail());
+            signUpModel.setName(userModel.getName());
          //  signUpModel.setPassword(userModel.getData().getpa());
             Picasso.get().load(Tags.IMAGE_URL).fit().into(binding.image);
             binding.btnSignup.setText(getResources().getString(R.string.edit_profile));
@@ -244,7 +244,6 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
         } else if (requestCode == CAMERA_REQ && resultCode == Activity.RESULT_OK && data != null) {
 
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-            //     Log.e("llflfl",bitmap.toString());
             uri = getUriFromBitmap(bitmap);
             if (uri != null) {
                 String path = Common.getImagePath(this, uri);
@@ -282,21 +281,23 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
             }
         } else {
             if (uri == null) {
-                updateProfileWithoutImage();
+                //updateProfileWithoutImage();
             } else {
-                updateProfileWithImage();
+               // updateProfileWithImage();
             }
         }
 
     }
 
-    private void updateProfileWithImage() {
+  /*  private void updateProfileWithImage() {
         ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
-        RequestBody user_part = Common.getRequestBodyText(userModel.getData().getId()+"");
+        RequestBody user_part = Common.getRequestBodyText(userModel.getId()+"");
 
-        RequestBody name_part = Common.getRequestBodyText(signUpModel.getRestaurant_name());
+        RequestBody name_part = Common.getRequestBodyText(signUpModel.getName());
+        RequestBody phone_code_part = Common.getRequestBodyText("+966");
+        RequestBody phone_part = Common.getRequestBodyText(signUpModel.getPhone());
         RequestBody email_part = Common.getRequestBodyText(signUpModel.getEmail());
         RequestBody password_part = Common.getRequestBodyText(signUpModel.getPassword());
 
@@ -304,7 +305,7 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
 
 
         Api.getService(Tags.base_url)
-                .updateProfileWithImage("Bearer " + userModel.getData().getToken(),user_part, name_part, email_part,password_part, image)
+                .updateProfileWithImage("Bearer " + userModel.getToken(),user_part, name_part, email_part,password_part, image)
                 .enqueue(new Callback<UserModel>() {
                     @Override
                     public void onResponse(Call<UserModel> call, Response<UserModel> response) {
@@ -405,31 +406,26 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
                     }
                 });
 
-    }
+    }*/
 
     private void signUpWithoutImage() {
         ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
         Api.getService(Tags.base_url)
-                .signUpWithoutImage(signUpModel.getRestaurant_name(), signUpModel.getEmail(), signUpModel.getPassword())
+                .signUpWithoutImage(signUpModel.getName(),"+966",signUpModel.getPhone(), signUpModel.getEmail(), signUpModel.getPassword())
                 .enqueue(new Callback<UserModel>() {
                     @Override
                     public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                         dialog.dismiss();
                         if (response.isSuccessful() && response.body() != null) {
-                            if (response.body().getStatus() == 200) {
-                                preferences.create_update_userdata(SignUpActivity.this, response.body());
-                                navigateToHomeActivity();
-                            } else if (response.body().getStatus() == 407) {
-                                Toast.makeText(SignUpActivity.this, R.string.user_exist, Toast.LENGTH_SHORT).show();
-                            } else if (response.body().getStatus() == 422) {
-                                Toast.makeText(SignUpActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
-
-                            }
+                            preferences.create_update_userdata(SignUpActivity.this, response.body());
+                            navigateToHomeActivity();
 
                         } else {
-                            if (response.code() == 500) {
+                            if (response.code() == 422) {
+                                Toast.makeText(SignUpActivity.this, R.string.email_phone_found, Toast.LENGTH_SHORT).show();
+                            }else if (response.code() == 500) {
                                 Toast.makeText(SignUpActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(SignUpActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
@@ -469,7 +465,10 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
         ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
-        RequestBody name_part = Common.getRequestBodyText(signUpModel.getRestaurant_name());
+        RequestBody name_part = Common.getRequestBodyText(signUpModel.getName());
+        RequestBody phone_code_part = Common.getRequestBodyText("+966");
+        RequestBody phone_part = Common.getRequestBodyText(signUpModel.getPhone());
+
         RequestBody email_part = Common.getRequestBodyText(signUpModel.getEmail());
         RequestBody password_part = Common.getRequestBodyText(signUpModel.getPassword());
 
@@ -478,28 +477,24 @@ public class SignUpActivity extends AppCompatActivity implements Listeners.SignU
 
 
         Api.getService(Tags.base_url)
-                .signUpWithImage(name_part, email_part, password_part, image)
+                .signUpWithImage(name_part,phone_code_part,phone_part, email_part, password_part, image)
                 .enqueue(new Callback<UserModel>() {
                     @Override
                     public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                         dialog.dismiss();
                         if (response.isSuccessful() && response.body() != null) {
-                            if (response.body().getStatus() == 200) {
-                                preferences.create_update_userdata(SignUpActivity.this, response.body());
-                                navigateToHomeActivity();
-                            } else if (response.body().getStatus() == 407) {
-                                Toast.makeText(SignUpActivity.this, R.string.user_exist, Toast.LENGTH_SHORT).show();
-                            } else if (response.body().getStatus() == 422) {
-                                Toast.makeText(SignUpActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
-
-                            }
+                            preferences.create_update_userdata(SignUpActivity.this, response.body());
+                            navigateToHomeActivity();
                         } else {
                             try {
                                 Log.e("error", response.code() + "__" + response.errorBody().string());
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-                            if (response.code() == 500) {
+                            if (response.code() == 422) {
+                                Toast.makeText(SignUpActivity.this, R.string.email_phone_found, Toast.LENGTH_SHORT).show();
+
+                            }else if (response.code() == 500) {
                                 Toast.makeText(SignUpActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(SignUpActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();

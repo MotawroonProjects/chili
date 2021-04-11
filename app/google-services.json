@@ -1,62 +1,33 @@
 {
   "project_info": {
-    "project_number": "1076069801287",
-    "project_id": "seraiapp-34590",
-    "storage_bucket": "seraiapp-34590.appspot.com"
+    "project_number": "707338834924",
+    "project_id": "chili-46a18",
+    "storage_bucket": "chili-46a18.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1076069801287:android:d91e018db3a9db0e39c062",
+        "mobilesdk_app_id": "1:707338834924:android:7036814f902503914e66c9",
         "android_client_info": {
-          "package_name": "com.sray"
+          "package_name": "com.chili_driver"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1076069801287-ben6u1v9p2c2ck81v739gce1ottps27n.apps.googleusercontent.com",
+          "client_id": "707338834924-5diigffh5f8doeag32hpgh0tic4p2o1g.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAyWc_iZutGgtc7QaFLB7VPVYl19nC3YN8"
+          "current_key": "AIzaSyATEv4J8C5xFY_f_G7sNi3_v_oTSXPgUi8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1076069801287-ben6u1v9p2c2ck81v739gce1ottps27n.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1076069801287:android:0c984defae0a377639c062",
-        "android_client_info": {
-          "package_name": "com.sray_restaurant"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1076069801287-ben6u1v9p2c2ck81v739gce1ottps27n.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAyWc_iZutGgtc7QaFLB7VPVYl19nC3YN8"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1076069801287-ben6u1v9p2c2ck81v739gce1ottps27n.apps.googleusercontent.com",
+              "client_id": "707338834924-5diigffh5f8doeag32hpgh0tic4p2o1g.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

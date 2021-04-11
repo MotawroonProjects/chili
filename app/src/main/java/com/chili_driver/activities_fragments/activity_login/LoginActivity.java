@@ -55,22 +55,12 @@ public class LoginActivity extends AppCompatActivity {
         loginModel = new LoginModel();
         binding.setModel(loginModel);
 
-        binding.btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        binding.btnLogin.setOnClickListener(v -> checkDataVaild());
 
-                checkDataVaild();
-
-            }
-        });
-
-        binding.tvSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        binding.tvSignUp.setOnClickListener((View.OnClickListener) v -> {
+            Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+            startActivity(intent);
+            finish();
         });
 
 
@@ -101,34 +91,31 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                         dialog.dismiss();
                         if (response.isSuccessful() && response.body() != null) {
-                            if (response.body().getStatus() == 200) {
-                                    preferences.create_update_userdata(LoginActivity.this, response.body());
-                                    preferences.create_update_session(LoginActivity.this, Tags.session_login);
-                                    navigateToHomeActivity();
-                            }
-
-                             else if (response.body().getStatus() == 401) {
-                               Toast.makeText(LoginActivity.this,getResources().getString(R.string.empinvaild),Toast.LENGTH_LONG).show();
-                            }
-                             else if(response.body().getStatus()==409){
-                                Toast.makeText(LoginActivity.this,getResources().getString(R.string.user_blocked),Toast.LENGTH_LONG).show();
-
-                            }
+                            preferences.create_update_userdata(LoginActivity.this, response.body());
+                            navigateToHomeActivity();
                         } else {
+
                             try {
                                 Log.e("mmmmmmmmmm", response.errorBody().string());
+
+
+
+                                if (response.code()==422){
+                                    Toast.makeText(LoginActivity.this, R.string.user_not_reg, Toast.LENGTH_SHORT).show();
+
+                                }
+                                else if (response.code() == 500) {
+                                    Toast.makeText(LoginActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Log.e("mmmmmmmmmm", response.code() + "");
+
+                                    Toast.makeText(LoginActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                                }
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
 
 
-                            if (response.code() == 500) {
-                                Toast.makeText(LoginActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Log.e("mmmmmmmmmm", response.code() + "");
-
-                                Toast.makeText(LoginActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
-                            }
                         }
                     }
 

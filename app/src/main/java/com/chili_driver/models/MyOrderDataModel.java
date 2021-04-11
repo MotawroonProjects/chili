@@ -4,14 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 public class MyOrderDataModel implements Serializable {
-    private List<OrderModel> data;
-    private int status;
-
+    private List<OrderModel> orders;
     public List<OrderModel> getData() {
-        return data;
-    }
-
-    public int getStatus() {
-        return status;
+        return orders;
     }
 }

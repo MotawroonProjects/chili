@@ -12,35 +12,48 @@ import com.chili_driver.R;
 
 
 public class SignUpModel extends BaseObservable {
-    private String restaurant_name;
+    private String name;
     private String image_url;
+    private String phone;
     private String email;
     private String password;
 
-    public ObservableField<String> error_restaurant_name = new ObservableField<>();
+    public ObservableField<String> error_name = new ObservableField<>();
+    public ObservableField<String> error_phone = new ObservableField<>();
+
     public ObservableField<String> error_email = new ObservableField<>();
     public ObservableField<String> error_password = new ObservableField<>();
 
 
     public boolean isDataValid(Context context) {
-        if (!restaurant_name.trim().isEmpty() &&
+        if (!name.trim().isEmpty() &&
+                !phone.trim().isEmpty() &&
                 !email.trim().isEmpty() &&
                 Patterns.EMAIL_ADDRESS.matcher(email).matches() &&
                 !email.trim().isEmpty()
                 && !password.isEmpty() && password.length() >= 6
 
         ) {
-            error_restaurant_name.set(null);
+            error_phone.set(null);
+            error_name.set(null);
             error_email.set(null);
             error_password.set(null);
 
             return true;
         } else {
-            if (restaurant_name.isEmpty()) {
-                error_restaurant_name.set(context.getString(R.string.field_required));
+            if (name.isEmpty()) {
+                error_name.set(context.getString(R.string.field_required));
 
             } else {
-                error_restaurant_name.set(null);
+                error_name.set(null);
+
+            }
+
+            if (phone.isEmpty()) {
+                error_phone.set(context.getString(R.string.field_required));
+
+            } else {
+                error_phone.set(null);
 
             }
 
@@ -51,7 +64,7 @@ public class SignUpModel extends BaseObservable {
                 error_email.set(context.getString(R.string.inv_email));
 
             } else {
-                error_restaurant_name.set(null);
+                error_name.set(null);
 
             }
             if (password.trim().isEmpty()) {
@@ -68,7 +81,8 @@ public class SignUpModel extends BaseObservable {
     }
 
     public SignUpModel() {
-        setRestaurant_name("");
+        setName("");
+        setPhone("");
         setEmail("");
         setPassword("");
 
@@ -76,13 +90,24 @@ public class SignUpModel extends BaseObservable {
 
 
     @Bindable
-    public String getRestaurant_name() {
-        return restaurant_name;
+    public String getName() {
+        return name;
     }
 
-    public void setRestaurant_name(String restaurant_name) {
-        this.restaurant_name = restaurant_name;
-        notifyPropertyChanged(BR.restaurant_name);
+    public void setName(String name) {
+        this.name = name;
+        notifyPropertyChanged(BR.name);
+
+    }
+
+    @Bindable
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+        notifyPropertyChanged(BR.phone);
 
     }
 

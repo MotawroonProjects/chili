@@ -44,7 +44,7 @@ public class ContactUsActivity extends AppCompatActivity {
         binding.setModel(userModel);
         contactUsModel = new ContactUsModel();
         if (userModel != null) {
-         /*   contactUsModel.setName(userModel.getData().getName());
+         /* contactUsModel.setName(userModel.getData().getName());
             contactUsModel.setEmail(userModel.getData().getEmail());
             contactUsModel.setPhone(userModel.getData().getPhone());*/
         }

@@ -34,30 +34,92 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.google.android.material.tabs.TabLayout
 
-                android:id="@+id/tab"
+            <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                app:tabBackground="@drawable/tab_indicator_model"
-                app:tabGravity="fill"
-                app:tabIndicatorColor="@color/color1"
-                app:tabIndicatorHeight="1dp"
-                app:tabMode="fixed"
-                style="@style/MineCustomTabText"
+                android:visibility="visible">
 
-                app:tabSelectedTextColor="@color/white"
-                app:tabTextColor="@color/colorPrimary" />
+                <androidx.appcompat.widget.Toolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home"
+                        android:textColor="@color/black"
+                        android:layout_gravity="center"
+                        android:textSize="15sp" />
 
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/pager"
+                    <ImageView
+                        android:id="@+id/imagePrevious"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="end"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/ic_clock2"
+                        app:tint="@color/colorPrimary" />
+                </androidx.appcompat.widget.Toolbar>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <FrameLayout
+                android:id="@+id/fragment_container"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/navigationView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:elevation="3dp"
+                app:itemHorizontalTranslationEnabled="true"
+                app:itemIconSize="20dp"
+                app:itemIconTint="@drawable/item_nav_bg"
+                app:itemRippleColor="@color/gray9"
+                app:itemTextAppearanceActive="@style/active"
+                app:itemTextAppearanceInactive="@style/active"
+                app:itemTextColor="@drawable/item_nav_bg"
+                app:labelVisibilityMode="labeled"
+                app:menu="@menu/menu" />
         </LinearLayout>
+
+
+        <FrameLayout
+            android:id="@+id/flLocation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:gravity="center"
+
+                >
+
+                <ProgressBar
+                    android:layout_width="35dp"
+                    android:layout_height="35dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:text="@string/getting_location"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </FrameLayout>
 
     </FrameLayout>
 

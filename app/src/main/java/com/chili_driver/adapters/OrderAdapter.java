@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,22 +14,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chili_driver.R;
 import com.chili_driver.activities_fragments.activity_home.fragments.FragmentOrders;
+import com.chili_driver.activities_fragments.activity_previous_order.PreviousOrderActivity;
 import com.chili_driver.databinding.OrderRowBinding;
 import com.chili_driver.models.OrderModel;
 
 import java.util.List;
+import java.util.Locale;
 
 public class OrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<OrderModel> list;
     private Context context;
     private LayoutInflater inflater;
     private Fragment fragment;
-
+    private AppCompatActivity activity;
     public OrderAdapter(List<OrderModel> list, Context context, Fragment fragment) {
         this.list = list;
         this.context = context;
         inflater = LayoutInflater.from(context);
         this.fragment = fragment;
+        activity = (AppCompatActivity) context;
 
     }
 
@@ -45,16 +49,27 @@ public class OrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
         MyHolder myHolder = (MyHolder) holder;
-        myHolder.binding.setModel(list.get(position));
-        myHolder.binding.btnfinish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (fragment instanceof FragmentOrders) {
+        OrderModel orderModel = list.get(position);
+        myHolder.binding.setModel(orderModel);
+        myHolder.binding.tvClientDistance.setText(String.format(Locale.ENGLISH,"%.2f %s",orderModel.getClient_distance(),context.getString(R.string.km)));
+        myHolder.binding.tvMarketDistance.setText(String.format(Locale.ENGLISH,"%.2f %s",orderModel.getMarket_distance(),context.getString(R.string.km)));
+
+        myHolder.itemView.setOnClickListener(v -> {
+            OrderModel  model = list.get(holder.getAdapterPosition());
+
+            if (fragment!=null){
+                if (fragment instanceof FragmentOrders){
                     FragmentOrders fragmentOrders = (FragmentOrders) fragment;
-                    fragmentOrders.finishOrder(list.get(holder.getLayoutPosition()));
+                    fragmentOrders.setItemData(model);
+                }
+            }else {
+                if (activity instanceof PreviousOrderActivity){
+                    PreviousOrderActivity previousOrderActivity = (PreviousOrderActivity) activity;
+                    previousOrderActivity.seItemData(model);
                 }
             }
         });
+
     }
 
     @Override

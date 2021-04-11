@@ -3,14 +3,11 @@ package com.chili_driver.models;
 import java.io.Serializable;
 
 public class SingleOrderModel implements Serializable {
-    private OrderModel data;
+    private OrderModel order;
     private int status;
 
     public OrderModel getData() {
-        return data;
+        return order;
     }
 
-    public int getStatus() {
-        return status;
-    }
 }

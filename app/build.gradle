@@ -5,7 +5,7 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "com.sray_restaurant"
+        applicationId "com.chili_driver"
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
@@ -43,7 +43,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    implementation 'com.squareup.retrofit2:retrofit:2.6.4'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.4'
     implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
@@ -52,7 +52,7 @@ dependencies {
     implementation 'com.aurelhubert:ahbottomnavigation:2.3.4'
     implementation 'com.github.mukeshsolanki:country-picker-android:2.0.1'
     implementation 'com.google.android.gms:play-services-places:17.0.0'
-    implementation 'com.google.android.gms:play-services-location:17.1.0'
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
     implementation 'com.github.FlyingPumba:SimpleRatingBar:v0.1.5'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
@@ -62,9 +62,10 @@ dependencies {
     implementation 'com.chaos.view:pinview:1.4.3'
     implementation 'com.google.android.exoplayer:exoplayer:2.11.1'
     implementation 'com.wdullaer:materialdatetimepicker:3.6.4'
-    implementation 'com.google.firebase:firebase-auth:19.4.0'
-    implementation 'com.google.firebase:firebase-core:17.5.0'
-    implementation 'com.google.firebase:firebase-messaging:20.2.4'
-
+    implementation 'com.google.firebase:firebase-auth:20.0.4'
+    implementation 'com.google.firebase:firebase-core:18.0.3'
+    implementation 'com.google.firebase:firebase-messaging:21.1.0'
+    implementation platform('com.google.firebase:firebase-bom:27.0.0')
+    implementation 'com.google.firebase:firebase-analytics'
 }
 apply plugin: 'com.google.gms.google-services'

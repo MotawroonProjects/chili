@@ -2,12 +2,14 @@ package com.chili_driver.services;
 
 import com.chili_driver.models.MyOrderDataModel;
 import com.chili_driver.models.OrderCountModel;
+import com.chili_driver.models.OrderModel;
 import com.chili_driver.models.RestaurantSettingModel;
 import com.chili_driver.models.SingleOrderModel;
 import com.chili_driver.models.UserModel;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -21,22 +23,26 @@ import retrofit2.http.Query;
 public interface Service {
 
     @FormUrlEncoded
-    @POST("api/restaurant-login")
+    @POST("api/login_driver")
     Call<UserModel> login(@Field("email") String email,
                           @Field("password") String password
 
     );
 
     @FormUrlEncoded
-    @POST("api/restaurant-register")
+    @POST("api/register_driver")
     Call<UserModel> signUpWithoutImage(@Field("name") String name,
+                                       @Field("phone_code") String phone_code,
+                                       @Field("phone") String phone,
                                        @Field("email") String email,
                                        @Field("password") String password
     );
 
     @Multipart
-    @POST("api/restaurant-register")
+    @POST("api/register_driver")
     Call<UserModel> signUpWithImage(@Part("name") RequestBody name,
+                                    @Part("phone_code") RequestBody phone_code,
+                                    @Part("phone") RequestBody phone,
                                     @Part("email") RequestBody email,
                                     @Part("password") RequestBody password,
                                     @Part MultipartBody.Part logo
@@ -66,64 +72,54 @@ public interface Service {
     );
 
     @FormUrlEncoded
-    @POST("api/restaurant-logout")
+    @POST("api/logout_driver")
     Call<UserModel> logout(@Header("Authorization") String user_token,
-                              @Field("user_id") String user_id,
-                              @Field("phone_token") String phone_token
-    );
-    @FormUrlEncoded
-    @POST("api/firebase-tokens")
-    Call<UserModel> updatePhoneToken(@Header("Authorization") String user_token,
-                                        @Field("phone_token") String phone_token,
-                                        @Field("user_id") int user_id,
-                                        @Field("software_type") String software_type
-    );
-    @GET("api/orders")
-    Call<MyOrderDataModel> getMyOrder(@Header("Authorization") String user_token,
-                                      @Query("restaurant_id") int restaurant_id,
-                                      @Query("order_status") String order_status,
-                                      @Query("orderBy") String orderBy
-    );
-
-    @GET("api/GetRestaurantOrdersCount")
-    Call<OrderCountModel> getOrdersCount(@Header("Authorization") String user_token,
-                                         @Query("restaurant_id") int restaurant_id
+                           @Field("user_id") String user_id,
+                           @Field("phone_token") String phone_token
     );
 
     @FormUrlEncoded
-    @POST("api/restaurant-create-order")
-    Call<SingleOrderModel> sendOrder(@Header("Authorization") String user_token,
-                                     @Field("restaurant_id") String restaurant_id
+    @POST("api/inser_driver_token")
+    Call<UserModel> updatePhoneToken(@Field("phone_token") String phone_token,
+                                     @Field("user_id") int user_id,
+                                     @Field("type") String software_type
+    );
+
+    @GET("api/driver_new_orders")
+    Call<MyOrderDataModel> getNewOrder(@Query("driver_id") int driver_id,
+                                       @Query("driver_lat") double driver_lat,
+                                       @Query("driver_long") double driver_long
+    );
+
+    @GET("api/driver_current_orders")
+    Call<MyOrderDataModel> getCurrentOrder(@Query("driver_id") int driver_id,
+                                           @Query("driver_lat") double driver_lat,
+                                           @Query("driver_long") double driver_long
+    );
+
+    @GET("api/driver_ended_orders")
+    Call<MyOrderDataModel> getPreviousOrder(@Query("driver_id") int driver_id,
+                                            @Query("driver_lat") double driver_lat,
+                                            @Query("driver_long") double driver_long
+    );
+
+
+    @GET("api/one_order")
+    Call<SingleOrderModel> getOrderById(@Query("order_id") int order_id,
+                                        @Query("driver_id") int driver_id
 
     );
 
     @FormUrlEncoded
-    @POST("api/restaurant-delete-order")
-    Call<SingleOrderModel> skipOrder(@Header("Authorization") String user_token,
-                                       @Field("order_id") String order_id,
-                                       @Field("barcode") String barcode,
-                                       @Field("barcode_image") String barcode_image
-
-
+    @POST("api/accept_order")
+    Call<OrderModel> acceptOrder(@Field("order_id") int order_id,
+                                 @Field("driver_id") int driver_id
     );
+
     @FormUrlEncoded
-    @POST("api/restaurant-finish-order")
-    Call<SingleOrderModel> finishOrder(@Header("Authorization") String user_token,
-                                     @Field("order_id") String order_id
-
-
+    @POST("api/refuse_order")
+    Call<ResponseBody> refuseOrder(@Field("order_id") int order_id,
+                                   @Field("driver_id") int driver_id
     );
-    @GET("api/restaurant-setting")
-    Call<RestaurantSettingModel> getRestaurantSetting(@Header("Authorization") String user_token,
-                                                      @Query("restaurant_id") int restaurant_id
-    );
-    @FormUrlEncoded
-    @POST("api/restaurant-order-settings")
-    Call<RestaurantSettingModel> changeRestaurantTime(@Header("Authorization") String user_token,
-                                                      @Field("restaurant_id") int restaurant_id,
-                                                      @Field("order_time_preparing") String order_time_preparing,
-                                                      @Field("order_first_num") String order_first_num
 
-
-    );
 }
