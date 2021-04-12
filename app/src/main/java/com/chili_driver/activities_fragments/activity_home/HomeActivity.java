@@ -210,9 +210,9 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
 
     public void logout() {
         if (userModel != null) {
-          /*  ProgressDialog dialog = Common.createProgressDialog(HomeActivity.this, getString(R.string.wait));
+            ProgressDialog dialog = Common.createProgressDialog(HomeActivity.this, getString(R.string.wait));
             dialog.show();
-            Api.getService(Tags.base_url).logout("Bearer " + userModel.getData().getToken(), userModel.getData().getId() + "", userModel.getData().getFirebaseToken()).enqueue(new Callback<UserModel>() {
+            Api.getService(Tags.base_url).logout( userModel.getId() + "", userModel.getFirebaseToken()).enqueue(new Callback<UserModel>() {
                 @Override
                 public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                     dialog.dismiss();
@@ -260,7 +260,6 @@ public class HomeActivity extends AppCompatActivity implements GoogleApiClient.O
 
                 }
             });
-*/
         }
     }
 

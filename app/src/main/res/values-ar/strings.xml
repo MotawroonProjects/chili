@@ -193,4 +193,5 @@
     <string name="date">تاريخ الطلب:</string>
     <string name="time">وقت الطلب:</string>
     <string name="payment">طريقة الدفع:</string>
+    <string name="end">انهاء</string>
 </resources>

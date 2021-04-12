@@ -98,7 +98,10 @@ public class OrderDetailsActivity extends AppCompatActivity {
             acceptOrder();
 
         });
+        binding.btnEnd.setOnClickListener(v -> {
+            endOrder();
 
+        });
 
         binding.btnRefuse.setOnClickListener(v -> {
             cancelOrder();
@@ -120,6 +123,53 @@ public class OrderDetailsActivity extends AppCompatActivity {
 
     }
 
+    private void endOrder() {
+        ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+        Api.getService(Tags.base_url)
+                .endOrder(order_id, userModel.getId())
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        dialog.dismiss();
+                        if (response.isSuccessful() && response.body() != null) {
+                            finish();
+                        } else {
+                            if (response.code() == 500) {
+                                Toast.makeText(OrderDetailsActivity.this, "Server Error", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(OrderDetailsActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                            }
+
+                            try {
+                                Log.e("error", response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        try {
+                            dialog.dismiss();
+                            if (t.getMessage() != null) {
+                                Log.e("msg_category_error", t.getMessage() + "__");
+
+                                if (t.getMessage().toLowerCase().contains("failed to connect") || t.getMessage().toLowerCase().contains("unable to resolve host")) {
+                                    Toast.makeText(OrderDetailsActivity.this, getString(R.string.something), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(OrderDetailsActivity.this, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        } catch (Exception e) {
+                            Log.e("Error", e.getMessage() + "__");
+                        }
+                    }
+                });
+    }
+
     private void acceptOrder() {
         ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
         dialog.setCancelable(false);
@@ -133,7 +183,8 @@ public class OrderDetailsActivity extends AppCompatActivity {
                         if (response.isSuccessful() && response.body() != null) {
                             orderModel = response.body();
                             binding.setModel(orderModel);
-                            onBackPressed();
+                            setResult(RESULT_OK);
+                            finish();
                         } else {
                             if (response.code() == 500) {
                                 Toast.makeText(OrderDetailsActivity.this, "Server Error", Toast.LENGTH_SHORT).show();

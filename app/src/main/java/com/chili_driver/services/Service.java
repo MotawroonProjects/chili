@@ -73,9 +73,8 @@ public interface Service {
 
     @FormUrlEncoded
     @POST("api/logout_driver")
-    Call<UserModel> logout(@Header("Authorization") String user_token,
-                           @Field("user_id") String user_id,
-                           @Field("phone_token") String phone_token
+    Call<UserModel> logout(@Field("client_id") String client_id,
+                           @Field("token") String token
     );
 
     @FormUrlEncoded
@@ -122,4 +121,9 @@ public interface Service {
                                    @Field("driver_id") int driver_id
     );
 
+    @FormUrlEncoded
+    @POST("api/end_order")
+    Call<ResponseBody> endOrder(@Field("order_id") int order_id,
+                                 @Field("driver_id") int driver_id
+    );
 }

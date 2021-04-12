@@ -70,7 +70,7 @@
                 android:layout_height="match_parent"
                 android:fillViewport="true"
                 android:fitsSystemWindows="true"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -457,35 +457,51 @@
 
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <Button
+        android:id="@+id/btnEnd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:text="@string/end"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:visibility='@{model.driver_status.equals("current")?View.VISIBLE:View.GONE,default=gone}'
+        />
+    <LinearLayout
+        android:id="@+id/llAction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility='@{model.driver_status.equals("new")?View.VISIBLE:View.GONE,default=gone}'
 
-                        <LinearLayout
-                            android:id="@+id/llAction"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:visibility='@{model.status.equals("new")?View.VISIBLE:View.GONE,default=gone}'
-                            >
+        >
 
-                            <Button
-                                android:id="@+id/btnAccept"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:background="@color/colorPrimary"
-                                android:text="@string/accept"
-                                android:textColor="@color/white"
-                                android:textSize="16sp" />
+        <Button
+            android:id="@+id/btnAccept"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:text="@string/accept"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
-                            <Button
-                                android:id="@+id/btnRefuse"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:background="@color/white"
-                                android:text="@string/refuse"
-                                android:textColor="@color/colorred"
-                                android:textSize="16sp" />
-                        </LinearLayout>
+        <Button
+            android:id="@+id/btnRefuse"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:text="@string/refuse"
+            android:textColor="@color/colorred"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</FrameLayout>
 
                     </LinearLayout>
                 </LinearLayout>
